@@ -674,6 +674,49 @@ service ssr_diag /system/bin/ssr_diag
     user system
     group system
 
+# dload_mode setting
+on property:persist.yu.download_mode=0
+	write /sys/module/msm_poweroff/parameters/download_mode	0
+
+on property:persist.yu.download_mode=1
+	write /sys/module/msm_poweroff/parameters/download_mode	1
+
+#wcnss/venus=system,modem=related  longxiaoming 2014/10/11
+on property:persist.yu.restart_level=4
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level system
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level system
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level related
+
+on property:persist.yu.restart_level=3
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level related
+
+on property:persist.yu.restart_level=1
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level system
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level system
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level system
+
+on property:persist.yu.restart_level=adsp,venus
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level system
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level system
+
+on property:persist.yu.restart_level=adsp,venus,wcnss
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level system
+        
+on property:persist.yu.restart_level=adsp,venus,modem
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level system
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level related
+        
+on property:persist.yu.restart_level=adsp,venus,modem,wcnss
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level related
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level related
+
 service hvdcp /system/bin/hvdcp
     class core
     user root
